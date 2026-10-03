@@ -1,8 +1,8 @@
 FROM node:20-alpine AS build
 WORKDIR /app
-COPY repub/package*.json ./
+COPY helios/package*.json ./
 RUN npm ci
-COPY repub/ .
+COPY helios/ .
 RUN npm run build
 
 FROM nginx:alpine
