@@ -742,3 +742,9 @@ Note: use port `8081` locally to avoid conflict with The Republic's container on
 ---
 
 _Pro Patria Et Stellis._
+
+---
+
+## Design update (supersedes the visual sections above)
+
+The site now follows the canvas design at https://claude.ai/artifact/VP5EjX8cm5adTvBZe6etKB: two routes (`/` and `/enlist`), styles in `helios/src/styles/helios.css` (chamfered panels, hazard band, Barlow Condensed headings, nebula hero), copy and data in `helios/src/lib/constants.js`. Where this conflicts with the palette, typography, motion and section descriptions above, this design wins.

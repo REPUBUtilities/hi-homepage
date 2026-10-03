@@ -1,23 +1,16 @@
-import Navbar from './components/layout/Navbar'
-import Footer from './components/layout/Footer'
-import HeroSection from './components/sections/HeroSection'
-import AboutSection from './components/sections/AboutSection'
-import OperationsSection from './components/sections/OperationsSection'
-import CorpsSection from './components/sections/CorpsSection'
-import JoinSection from './components/sections/JoinSection'
+import { Route, Routes } from 'react-router-dom'
+import Layout from './components/Layout'
+import Home from './pages/Home'
+import Enlist from './pages/Enlist'
 
 export default function App() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <HeroSection />
-        <AboutSection />
-        <OperationsSection />
-        <CorpsSection />
-        <JoinSection />
-      </main>
-      <Footer />
-    </>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="enlist" element={<Enlist />} />
+        <Route path="*" element={<Home />} />
+      </Route>
+    </Routes>
   )
 }
