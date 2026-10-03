@@ -1,13 +1,12 @@
-# The Republic — Alliance Homepage
+# Helios Initiative — Alliance Homepage
 
-Public-facing website for **The Republic**, an alliance in [Eve Online](https://www.eveonline.com). Covers alliance identity, membership information, leadership, and corporation recruitment.
+Public-facing website for **Helios Initiative**, the PvP sub-alliance of [The Republic](https://republic-alliance.com) in [Eve Online](https://www.eveonline.com). Covers the alliance mandate, doctrine, roster, and enlistment requirements.
 
 ## Stack
 
-- **React 19** + **Vite** — SPA
-- **Tailwind CSS v4** — utility-first styling
-- **Framer Motion** — animations
-- **Eve ESI API** — live capsuleer and corporation counts
+- **React 19** + **Vite** — SPA with two routes (`/` and `/enlist`)
+- **React Router** — `BrowserRouter`, served with an Nginx SPA fallback
+- **Tailwind CSS v4** — base layer; site styles live in `helios/src/styles/helios.css`
 
 ## Prerequisites
 
@@ -17,18 +16,16 @@ Public-facing website for **The Republic**, an alliance in [Eve Online](https://
 ## Local Development
 
 ```bash
-cd repub
+cd helios
 npm install
 npm run dev
 ```
 
-The dev server runs at `http://localhost:5173`.
-
 ## Production Build
 
 ```bash
-cd repub
-npm run build       # outputs to repub/dist
+cd helios
+npm run build       # outputs to helios/dist
 npm run preview     # preview the built output locally
 ```
 
@@ -37,21 +34,21 @@ npm run preview     # preview the built output locally
 Build and run the Nginx container locally:
 
 ```bash
-docker build -t the-republic-web .
-docker run -p 8080:80 the-republic-web
+docker build -t helios-initiative-web .
+docker run -p 8081:80 helios-initiative-web
 ```
 
-The site is then available at `http://localhost:8080`.
+The site is then available at `http://localhost:8081`.
 
 ## CI/CD
 
 Pushing to `main` triggers a GitHub Actions workflow that builds and publishes the Docker image to the GitHub Container Registry:
 
 ```text
-ghcr.io/reputilities/homepage:latest
+ghcr.io/repubutilities/hi-homepage:latest
 ```
 
-Each build is also tagged with its short commit SHA for traceability.
+Each build is also tagged with its short commit SHA for traceability. Actions must be enabled in the repository settings for the workflow to run.
 
 ### Deploying on a server
 
@@ -64,8 +61,8 @@ echo <TOKEN> | docker login ghcr.io -u <github-username> --password-stdin
 Then pull and run:
 
 ```bash
-docker pull ghcr.io/reputilities/homepage:latest
-docker run -d -p 80:80 --restart unless-stopped ghcr.io/reputilities/homepage:latest
+docker pull ghcr.io/repubutilities/hi-homepage:latest
+docker run -d -p 80:80 --restart unless-stopped ghcr.io/repubutilities/hi-homepage:latest
 ```
 
 ## Project Structure
@@ -77,16 +74,13 @@ docker run -d -p 80:80 --restart unless-stopped ghcr.io/reputilities/homepage:la
 ├── .github/
 │   └── workflows/
 │       └── docker.yml
-└── repub/                  # SPA root
-    ├── public/             # Static assets (images, favicon)
+└── helios/                 # SPA root
+    ├── public/             # Static assets (falcon logo)
     └── src/
-        ├── components/
-        │   ├── layout/     # Navbar, Footer, Section
-        │   ├── sections/   # Page sections (Hero, About, etc.)
-        │   └── ui/         # Button, Card, Divider
-        ├── hooks/          # useActiveSection, useAllianceStats
-        ├── lib/            # constants.js, variants.js
-        └── styles/         # globals.css
+        ├── components/     # Layout (nav, footer), Ui (Panel, Heading, Steps)
+        ├── lib/            # constants.js — copy and data
+        ├── pages/          # Home, Enlist
+        └── styles/         # globals.css, helios.css
 ```
 
 ## License
